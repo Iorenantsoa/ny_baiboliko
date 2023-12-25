@@ -7,6 +7,7 @@ import {
     Item,
 } from 'react-navigation-header-buttons';
 import { MaterialHeaderButton } from '../components/CustomHeaderButton';
+import { Colors } from '../Colors/Colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,9 +16,14 @@ const VersetStackNav = () => {
         <Stack.Navigator
             screenOptions={
                 {
+                    headerTitleStyle : { 
+                        fontFamily  : 'Merienda_700Bold',
+                    },
+                    headerTintColor: Colors.purple,
                     headerLargeTitle: true,
                     headerLargeTitleStyle: {
                         fontSize: 28,
+                        fontFamily  : 'Merienda_700Bold',
                     }
                 }
             }
@@ -29,13 +35,13 @@ const VersetStackNav = () => {
                             tabBarIcon: ({ color, size }) => (
                                 <MaterialIcons name="wb-sunny" size={26} color={color} />
                             ),
-                            title: "Evanjely masina",
-
+                            title: "Evanjely masina", 
                             headerRight: () => (
                                 <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
                                     <Item
                                         title="notifications"
                                         iconName="notifications"
+                                        color={Colors.purple}
                                         onPress={() => navigation.navigate('NotificationsScreen')}
                                     />
                                 </HeaderButtons>
@@ -45,7 +51,9 @@ const VersetStackNav = () => {
                     )
                 }
             />
-            <Stack.Screen name="NotificationsScreen" component={NotificationScreen} />
+            <Stack.Screen name="NotificationsScreen" component={NotificationScreen} options={{
+                title : "Notifications"
+            }} />
         </Stack.Navigator>
     )
 }

@@ -20,7 +20,7 @@ const VersetScreen = () => {
           </View>
           <View style={styles.footerContainer}>
             <Caption>23 décembre 2023</Caption>
-            <Caption><MaterialIcons size={23} name='share'/></Caption>
+            <Caption><MaterialIcons size={23} name='share' color={Colors.purple}/></Caption>
           </View>
         </View>
       </View>
@@ -48,9 +48,10 @@ const styles = StyleSheet.create({
     minHeight: 100,
     borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 16,
-    shadowColor : Colors.black , 
-    // shadowOpacity : 0.1 ,  
+    paddingVertical: 16, 
+    shadowColor: Colors.black, 
+    shadowOffset: { width: 0, height: 1 }, 
+    shadowOpacity: 0.2, 
 
 
   },

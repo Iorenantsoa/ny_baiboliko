@@ -1,47 +1,21 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TopStackNav } from '../../routes/TopStackNav';
 
-const data = [
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-  { title: "fqjdkfq", age: "13" },
-]
+
+
+const Stack = createNativeStackNavigator();
 
 const HomeScreen = () => {
   return (
-    <View>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-      >
-        {data.map((d, index) => (
-          <View key={index} style={{ fontSize: 30 }}>
-            <Text>{d.title} | {d.age}
-            </Text>
-          </View>
-        ))}
-      </ScrollView>
-    </View>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false
+      }}
+    >
+      <Stack.Screen name='topTabs' component={TopStackNav} />
+    </Stack.Navigator>
   )
 }
 

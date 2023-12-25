@@ -14,7 +14,7 @@ const OptionScreen = () => {
           <View style={styles.offreProHeader}>
             <Paragraph style={{ fontWeight: "700" }}>Offre Pro</Paragraph>
             <TouchableOpacity>
-              <Paragraph style={{ fontWeight: "500" }}> Souscrire</Paragraph>
+              <Paragraph style={{ fontWeight: "500" , color : Colors.purple }}> Souscrire</Paragraph>
             </TouchableOpacity>
           </View>
           <Caption style={{ width: "70%" }}>Débloquez toutes les fonctionnalités de l'application</Caption>
@@ -113,7 +113,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
     marginTop: 10,
-    shadowColor: Colors.gray
+    shadowColor: Colors.black, 
+    shadowOffset: { width: 0, height: 1 }, 
+    shadowOpacity: 0.2, 
   },
   optionGeneral: {
     marginTop: 20
@@ -129,8 +131,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 10,
     paddingHorizontal: 10,
-    paddingVertical: 15,
+    paddingVertical: 10,
     marginTop: 10,
-    shadowColor: Colors.gray
+    shadowColor: Colors.black, 
+    shadowOffset: { width: 0, height: 1 }, 
+    shadowOpacity: 0.2, 
   }
 }) 
