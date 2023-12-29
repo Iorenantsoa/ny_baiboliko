@@ -1,10 +1,11 @@
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Colors } from '../../Colors/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { FAB, Provider as PaperProvider, Portal, Modal } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeToDarkMode, changeToLightMode } from '../../redux/actions/isDayAction';
+import { addFontSize, changeFont, reduceFontSize } from '../../redux/actions/ChangeFontAction';
 
 
 const PageView = ({ route }) => {
@@ -14,11 +15,21 @@ const PageView = ({ route }) => {
     const item = route.params.item;
     const nameBook = route.params.book
 
-
-
     const dispatch = useDispatch()
-    const isDay = useSelector(state => state.changeModeReducer.isDay)
 
+
+    const isDay = useSelector(state => state.changeModeReducer.isDay)
+    const font = useSelector(state => state.fontReducer.font)
+    const fontSize = useSelector(state => state.fontReducer.fontSize)
+
+    const fontActiveAndanda = font === "AndadaPro_400Regular" ? { ...styles.sectionTwoText, fontFamily: "AndadaPro_400Regular", color: Colors.purple } : { ...styles.sectionTwoText, fontFamily: "Raleway" }
+    const fontActiveRaleway = font === "Raleway" ? { ...styles.sectionTwoText, fontFamily: "Raleway", color: Colors.purple } : { ...styles.sectionTwoText, fontFamily: "Raleway" }
+    const fontActiveLato = font === "Lato_400Regular" ? { ...styles.sectionTwoText, fontFamily: "Lato_400Regular", color: Colors.purple } : { ...styles.sectionTwoText, fontFamily: "Raleway" }
+    const fontActiveLora = font === "Lora_400Regular" ? { ...styles.sectionTwoText, fontFamily: "Lora_400Regular", color: Colors.purple } : { ...styles.sectionTwoText, fontFamily: "Raleway" }
+
+    useEffect(() => {
+        console.log(font)
+    }, [fontSize])
 
     return (
         <PaperProvider>
@@ -37,7 +48,7 @@ const PageView = ({ route }) => {
 
                                 return (
                                     <View key={verset}>
-                                        <Text style={styles.verset}>{verset} <Text style={isDay ? styles.contenu : styles.contenuDark}>{contenu}</Text></Text>
+                                        <Text style={styles.verset}>{verset} <Text style={isDay ? { ...styles.contenu, fontFamily: font, fontSize: fontSize } : { ...styles.contenuDark, fontFamily: font, fontSize: fontSize }}>{contenu}</Text></Text>
                                     </View>
                                 );
                             })}
@@ -53,13 +64,12 @@ const PageView = ({ route }) => {
                 size='small'
                 onPress={showModal}
             />
-
             <Portal>
                 <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={isDay ? styles.containerModalStyle : styles.containerModalDarkStyle} >
                     <View style={styles.modalStyleContainerSectionOne}>
 
                         <TouchableOpacity
-                            style={isDay ? styles.sectionOne: styles.sectionOneDark}
+                            style={isDay ? styles.sectionOne : styles.sectionOneDark}
                             onPress={() => {
                                 dispatch(changeToLightMode())
                             }}
@@ -67,37 +77,87 @@ const PageView = ({ route }) => {
                             <Text style={styles.sectionOneTextDay}><Ionicons name="sunny" size={18} color={isDay ? Colors.purple : Colors.grey} /><Text style={isDay ? { color: Colors.purple } : { color: Colors.grey }}> Day</Text></Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={isDay ? styles.sectionOne: styles.sectionOneDark}
+                            style={isDay ? styles.sectionOne : styles.sectionOneDark}
                             onPress={
                                 () => {
                                     dispatch(changeToDarkMode())
                                 }}
-
                         >
                             <Text style={styles.sectionOneTextNight}><Ionicons name="moon" size={18} color={!isDay ? Colors.purple : Colors.grey} /> <Text style={!isDay ? { color: Colors.purple } : { color: Colors.grey }}> Night</Text></Text>
                         </TouchableOpacity>
                     </View>
                     <View style={isDay ? styles.modalStyleContainerSectionTwo : styles.modalStyleContainerSectionTwoDark}>
-                        <View style={styles.sectionTwo}>
-                            <Text style={styles.sectionTwoText}>Andada</Text>
-                        </View>
-                        <View style={styles.sectionTwo}>
-                            <Text style={styles.sectionTwoText}>Lato</Text>
-                        </View>
-                        <View style={styles.sectionTwo}>
-                            <Text style={styles.sectionTwoText}>Lora</Text>
-                        </View>
-                        <View style={styles.sectionTwo}>
-                            <Text style={styles.sectionTwoText}>Raleway</Text>
-                        </View>
+                        <TouchableOpacity style={styles.sectionTwo}
+                            onPress={() => {
+                                dispatch(changeFont("AndadaPro_400Regular"))
+                            }} 
+                        >
+                            <Text style={fontActiveAndanda}>Andada</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.sectionTwo}
+
+                            onPress={() => {
+                                dispatch(changeFont("Lato_400Regular"))
+                            }}
+
+                        >
+                            <Text style={fontActiveLato}>Lato</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.sectionTwo}
+
+                            onPress={() => {
+                                dispatch(changeFont("Lora_400Regular"))
+                            }}
+                        >
+                            <Text style={fontActiveLora}>Lora</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.sectionTwo}
+
+                            onPress={() => {
+                                dispatch(changeFont("Raleway"))
+                            }}
+
+                        >
+                            <Text style={fontActiveRaleway}>Raleway</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={isDay ? styles.modalStyleContainerSectionThree : styles.modalStyleContainerSectionThreeDark}>
-                        <TouchableOpacity>
-                            <Ionicons name="text" size={17} color={Colors.grey} style={styles.sectionThreeIcon1} />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Ionicons name="text" size={28} color={Colors.grey} style={styles.sectionThreeIcon2} />
-                        </TouchableOpacity>
+                        {
+                            fontSize <= 10 ? ((<TouchableOpacity
+                                onPress={() => dispatch(reduceFontSize(2))}
+                                disabled={true}
+                            >
+                                <Ionicons name="text" size={17} color={Colors.grey} style={styles.sectionThreeIcon1} />
+                            </TouchableOpacity>))
+
+                                :
+
+                                (<TouchableOpacity
+                                    onPress={() => dispatch(reduceFontSize(2))}
+                                >
+                                    <Ionicons name="text" size={17} color={Colors.grey} style={styles.sectionThreeIcon1} />
+                                </TouchableOpacity>)
+                        }
+
+
+                        {
+                            fontSize >= 24 ? (
+                                <TouchableOpacity
+                                    onPress={() => dispatch(addFontSize(4))}
+                                    disabled = {true}
+                                >
+                                    <Ionicons name="text" size={28} color={Colors.grey} style={styles.sectionThreeIcon2} />
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity
+                                    onPress={() => dispatch(addFontSize(4))}
+                                >
+                                    <Ionicons name="text" size={28} color={Colors.grey} style={styles.sectionThreeIcon2} />
+                                </TouchableOpacity>
+                            )
+                        }
+
+
                     </View>
                 </Modal>
             </Portal>
@@ -163,11 +223,13 @@ const styles = StyleSheet.create({
         color: Colors.black,
         fontWeight: '400',
         fontSize: 14,
+
     },
+
     contenuDark: {
         color: Colors.white,
         fontWeight: '200',
-        // fontSize: 14,
+
     },
     fab: {
         position: 'absolute',
@@ -182,10 +244,10 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: Colors.white,
-        
-        shadowColor : Colors.white ,
-        shadowOffset : {width :12 , height : 12},
-        shadowOpacity : 1
+
+        shadowColor: Colors.white,
+        shadowOffset: { width: 12, height: 12 },
+        shadowOpacity: 1
     },
     containerModalDarkStyle: {
 
@@ -203,16 +265,16 @@ const styles = StyleSheet.create({
     modalStyleContainerSectionTwo: {
         flexDirection: 'row',
         justifyContent: "space-between",
-        alignItems: 'center' ,
-        borderWidth : 0.5 , 
-        borderColor : Colors.gray
+        alignItems: 'center',
+        borderWidth: 0.5,
+        borderColor: Colors.gray
     },
     modalStyleContainerSectionTwoDark: {
         flexDirection: 'row',
         justifyContent: "space-between",
-        alignItems: 'center' ,
-        borderWidth : 0.9 , 
-        borderColor : Colors.gray
+        alignItems: 'center',
+        borderWidth: 0.9,
+        borderColor: Colors.gray
     },
     sectionOne: {
         padding: 20,
@@ -230,16 +292,16 @@ const styles = StyleSheet.create({
         borderColor: Colors.gray,
         flex: 1
     },
-    
+
 
     sectionOneTextDay: {
         fontWeight: "500",
-        fontSize: 18, 
+        fontSize: 18,
 
     },
     sectionOneTextNight: {
         fontWeight: "500",
-        fontSize: 18, 
+        fontSize: 18,
     },
     sectionTwo: {
         paddingVertical: 20,
@@ -250,7 +312,7 @@ const styles = StyleSheet.create({
     },
     sectionTwoText: {
         fontWeight: "500",
-        color : Colors.grey
+        color: Colors.grey
     },
     modalStyleContainerSectionThree: {
         flexDirection: 'row',
@@ -272,7 +334,10 @@ const styles = StyleSheet.create({
     },
     sectionThreeIcon2: {
         padding: 15,
-    }
+    },
 
+    fontTextColor: {
+        color: Colors.purple
+    }
 
 });

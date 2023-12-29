@@ -9,10 +9,17 @@ import { CustomHeaderButtomIonicons } from '../components/CustomHeaderButtomIoni
 import { Colors } from '../Colors/Colors';
 import { TopStackNav } from './TopStackNav';
 import PageView from '../screens/bible/PageView';
+import { useSelector } from 'react-redux'; 
 
 const Stack = createNativeStackNavigator();
 
 const BibleStackNav = () => {
+
+
+    const isDay = useSelector(state => state.changeModeReducer.isDay)
+
+    
+    
     return (
         <Stack.Navigator
             screenOptions={
@@ -24,11 +31,9 @@ const BibleStackNav = () => {
                         fontSize: 28,
                         fontFamily: 'Merienda_700Bold',
                     },
-
+                    
                     title: 'La Sainte Bible',
-                    headerTintColor: Colors.purple,
-
-
+                    headerTintColor: Colors.purple,  
                 }
             }
         >
@@ -51,6 +56,7 @@ const BibleStackNav = () => {
                 options={{
                     headerBackVisible: true,
                     headerBackTitleVisible: false,
+                    
                     title: "",
                     gestureEnabled: true,
                     headerRight: () => (

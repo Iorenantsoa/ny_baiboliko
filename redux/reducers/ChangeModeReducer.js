@@ -2,7 +2,7 @@ import { CHANGE_TO_DARK_MODE } from "../Constants";
 import { CHANGE_TO_LIGHT_MODE } from "../Constants";
 
 const initialState = {
-    isDay: true
+    isDay: true 
 } 
 
 export const ChangeModeReducer = (state = initialState, action) => {
@@ -12,6 +12,6 @@ export const ChangeModeReducer = (state = initialState, action) => {
         case CHANGE_TO_DARK_MODE:
             return {...state , isDay: false}
         default:
-            return initialState;
+            return state;
     }
 }

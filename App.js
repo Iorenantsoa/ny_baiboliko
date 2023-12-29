@@ -9,13 +9,27 @@ import AppLoading from 'expo-app-loading';
 import { useFonts, GreatVibes_400Regular } from '@expo-google-fonts/great-vibes';
 import { Acme_400Regular } from '@expo-google-fonts/acme';
 import { Merienda_700Bold } from '@expo-google-fonts/merienda';
+import {
+  AndadaPro_400Regular
+} from '@expo-google-fonts/andada-pro';
+import {
+  Lato_400Regular,
+} from '@expo-google-fonts/lato';
+import {
+  Lora_400Regular
+} from '@expo-google-fonts/lora';
 
-
+  
 export default function App() {
   let [fontsLoaded] = useFonts({
     greetVibesRegular: GreatVibes_400Regular,
     Merienda_700Bold: Merienda_700Bold,
     Acme_400Regular: Acme_400Regular,
+    AndadaPro_400Regular: AndadaPro_400Regular  ,
+    Lato_400Regular : Lato_400Regular ,
+    Lora_400Regular: Lora_400Regular ,
+    Raleway : require('./assets/fonts/Raleway/Raleway-Regular.ttf')
+
   });
 
   if (!fontsLoaded) {
