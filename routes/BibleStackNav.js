@@ -5,9 +5,10 @@ import {
     Item,
 } from 'react-navigation-header-buttons';
 import { MaterialHeaderButton } from '../components/CustomHeaderButton';
+import { CustomHeaderButtomIonicons } from '../components/CustomHeaderButtomIonicons';
 import { Colors } from '../Colors/Colors';
 import { TopStackNav } from './TopStackNav';
-import HomeScreen from '../screens/bible/HomeScreen';
+import PageView from '../screens/bible/PageView';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,14 +19,22 @@ const BibleStackNav = () => {
                 {
                     headerTitleStyle: {
                         fontFamily: 'Merienda_700Bold',
-                    },
-                    headerLargeTitle: true,
+                    }, 
                     headerLargeTitleStyle: {
                         fontSize: 28,
                         fontFamily: 'Merienda_700Bold',
-                    },  
+                    },
+
                     title: 'La Sainte Bible',
                     headerTintColor: Colors.purple,
+
+
+                }
+            }
+        >
+            <Stack.Screen name='TopStack' component={TopStackNav}
+
+                options={{
                     headerRight: () => (
                         <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
                             <Item
@@ -36,12 +45,43 @@ const BibleStackNav = () => {
                             />
                         </HeaderButtons>
                     )
-
-                }
-            }
-        >
-            {/* <Stack.Screen name='topTabs' component={TopStackNav} /> */}
-            <Stack.Screen name='HomeScree,' component={HomeScreen} />
+                }}
+            />
+            <Stack.Screen name='PageView' component={PageView}
+                options={{
+                    headerBackVisible: true,
+                    headerBackTitleVisible: false,
+                    title: "",
+                    gestureEnabled: true,
+                    headerRight: () => (
+                        <>
+                            
+                            <HeaderButtons HeaderButtonComponent={MaterialHeaderButton}>
+                                <Item
+                                    title="list"
+                                    iconName="filter-list-alt"
+                                    color={Colors.purple}
+                                    onPress={() => alert('Passer en mode pro pour avoir cette fonctionnalité')}
+                                    style = {{
+                                        marginHorizontal : 5
+                                    }}
+                                />
+                            </HeaderButtons>
+                            <HeaderButtons HeaderButtonComponent={CustomHeaderButtomIonicons}>
+                                <Item
+                                    title="share-outline"
+                                    iconName="share-outline"
+                                    color={Colors.purple}
+                                    onPress={() => alert('Passer en mode pro pour avoir cette fonctionnalité')}
+                                    style = {{
+                                        marginLeft : 5
+                                    }}
+                                />
+                            </HeaderButtons>
+                        </>
+                    )
+                }}
+            />
         </Stack.Navigator>
     )
 }

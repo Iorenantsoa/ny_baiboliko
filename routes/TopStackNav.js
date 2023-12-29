@@ -1,14 +1,36 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ChapitresScreen from '../screens/bible/ChapitresScreen'
-import NoteScreen from '../screens/bible/NotesScreen'
+import NewTestament from '../screens/bible/NewTestament'
+import OldTestament from '../screens/bible/OldTestament' 
+import { Colors } from '../Colors/Colors';
 
 const Tab = createMaterialTopTabNavigator();
 
-export const TopStackNav = ()=> {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="Chapitres" component={ChapitresScreen}/>
-      <Tab.Screen name="Settings" component={NoteScreen} />
-    </Tab.Navigator>
+export const TopStackNav = () => {
+  return ( 
+      <Tab.Navigator
+        screenOptions={{
+          tabBarIndicatorStyle  : {
+            backgroundColor : Colors.purple
+          }
+        }}
+      >
+        <Tab.Screen name="newTestament" component={NewTestament} options={{
+          title : "Nouveau Testament" , 
+          tabBarLabelStyle : { 
+            fontStyle : 'italic'
+          } ,
+          tabBarActiveTintColor : Colors.purple ,
+          tabBarInactiveTintColor : Colors.grey
+          
+        }}/>
+        <Tab.Screen name="oldTestament" component={OldTestament} options={{
+          title : "Ancien Testament" , 
+          tabBarLabelStyle : {
+            fontStyle : 'italic'
+          },
+          tabBarActiveTintColor : Colors.purple,
+          tabBarInactiveTintColor : Colors.grey
+        }}/>
+      </Tab.Navigator> 
   );
 }
